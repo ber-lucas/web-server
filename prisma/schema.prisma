@@ -12,3 +12,38 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Client {
+  id      String @id @default(uuid())
+  name    String
+  contact String
+
+  Order Order[]
+}
+
+model Garment {
+  id    String @id @default(uuid())
+  type  String
+  value Float
+
+  GarmentOnOrders GarmentOnOrders[]
+}
+
+model Order {
+  id              String            @id @default(uuid())
+  orderNumber     Int               @default(autoincrement())
+  date            DateTime          @default(now())
+  clientId        String
+  client          Client            @relation(fields: [clientId], references: [id])
+  GarmentOnOrders GarmentOnOrders[]
+}
+
+model GarmentOnOrders {
+  garment   Garment @relation(fields: [garmentId], references: [id])
+  garmentId String
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  amount    Int
+
+  @@id([orderId, garmentId])
+}
