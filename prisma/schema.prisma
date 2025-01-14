@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Client {
-  id      String @id @default(uuid())
+  id      String @id
   name    String
   contact String
 
@@ -22,7 +22,7 @@ model Client {
 }
 
 model Garment {
-  id    String @id @default(uuid())
+  id    String @id
   type  String
   value Float
 
@@ -30,7 +30,7 @@ model Garment {
 }
 
 model Order {
-  id              String            @id @default(uuid())
+  id              String            @id
   orderNumber     Int               @default(autoincrement())
   date            DateTime          @default(now())
   clientId        String
