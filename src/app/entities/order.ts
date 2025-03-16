@@ -1,9 +1,10 @@
 import { randomUUID } from 'node:crypto';
 
 export interface OrderProperties {
-  orderNumber: number;
   date: Date;
   clientId: string;
+  garmentId: string;
+  amount: number;
 }
 
 export class Order {
@@ -12,15 +13,16 @@ export class Order {
 
   constructor(properties: OrderProperties) {
     this.properties = properties;
+
+    if (this.properties.date == undefined) {
+      this.properties.date = new Date();
+    }
+
     this._id = randomUUID();
   }
 
   public get id(): string {
     return this._id;
-  }
-
-  public get orderNumber(): number {
-    return this.properties.orderNumber;
   }
 
   public get date(): Date {
