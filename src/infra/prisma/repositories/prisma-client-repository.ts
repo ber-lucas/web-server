@@ -8,9 +8,16 @@ export class PrismaClientRepository implements ClientRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create(client: Client): Promise<void> {
+    console.log(`Creating client ${client.id}`);
+    console.log(`Creating client ${client.name}`);
+    console.log(`Creating client ${client.contact}`);
     try {
       await this.prismaService.client.create({
-        data: client,
+        data: {
+          id: client.id,
+          name: client.name,
+          contact: client.contact,
+        },
       });
     } catch (e) {
       throw new Error(`Create client error: ${e}`);

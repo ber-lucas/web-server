@@ -1,4 +1,4 @@
-import { Body, Controller } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateClient } from '../../../app/use-cases/client/create-client';
 import { CreateClientBody } from '../dtos/create-client-body';
 import { ClientViewModel } from '../view-models/client-view-model';
@@ -7,9 +7,10 @@ import { ClientViewModel } from '../view-models/client-view-model';
 export class ClientsController {
   constructor(private createClient: CreateClient) {}
 
+  @Post('create')
   async create(@Body() body: CreateClientBody): Promise<ClientViewModel> {
     const { name, contact } = body;
-
+    console.log(`controller ${body}`);
     try {
       const { client } = await this.createClient.execute({
         name,
