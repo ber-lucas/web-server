@@ -11,7 +11,6 @@ export class Client {
 
   constructor(properties: ClientProperties) {
     this.properties = properties;
-    console.log(`constructor ${properties.name}`);
     this._id = randomUUID();
   }
 

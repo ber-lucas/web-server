@@ -7,7 +7,7 @@ interface FindAllGarmentResponse {
 }
 
 @Injectable()
-export class FindAllClient {
+export class FindAllGarment {
   constructor(private garmentRepository: GarmentRepository) {}
 
   async execute(): Promise<FindAllGarmentResponse> {
