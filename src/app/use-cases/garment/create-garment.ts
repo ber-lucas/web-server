@@ -3,7 +3,6 @@ import { GarmentRepository } from '../../repositories/garment-repository';
 import { Injectable } from '@nestjs/common';
 
 interface CreateGarmentRequest {
-  name: string;
   type: string;
   value: number;
 }
@@ -17,10 +16,9 @@ export class CreateGarment {
   constructor(private garmentRepository: GarmentRepository) {}
 
   async execute(request: CreateGarmentRequest): Promise<CreateGarmentResponse> {
-    const { name, type, value } = request;
+    const { type, value } = request;
 
     const garment = new Garment({
-      name,
       type,
       value,
     });

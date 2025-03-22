@@ -7,7 +7,7 @@ import { DeleteClient } from '../../../app/use-cases/client/delete-client';
 import { FindAllClient } from '../../../app/use-cases/client/findAll-client';
 
 @Controller('client')
-export class ClientsController {
+export class ClientController {
   constructor(
     private createClient: CreateClient,
     private deleteClient: DeleteClient,

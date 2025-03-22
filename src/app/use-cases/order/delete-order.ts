@@ -10,7 +10,7 @@ interface DeleteGarmentResponse {
 }
 
 @Injectable()
-export class DeleteGarment {
+export class DeleteOrder {
   constructor(private garmentRepository: GarmentRepository) {}
 
   async execute(request: DeleteGarmentRequest): Promise<DeleteGarmentResponse> {
