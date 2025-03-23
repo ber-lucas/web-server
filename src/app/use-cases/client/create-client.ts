@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ClientRepository } from '../../repositories/client-repository';
 
 interface CreateClientResponse {
-  client: Client;
+  success: boolean;
 }
 
 interface CreateClientRequest {
@@ -23,10 +23,10 @@ export class CreateClient {
       contact,
     });
 
-    await this.clientRepository.create(client);
+    const success = await this.clientRepository.create(client);
 
     return {
-      client,
+      success,
     };
   }
 }

@@ -1,10 +1,9 @@
 import { Client } from '../../../app/entities/client';
 
 export class ClientViewModel {
-  static toCreate(client: Client) {
+  static toCreate(success: boolean) {
     return {
-      name: client.name,
-      contact: client.contact,
+      isCreated: success,
     };
   }
 
@@ -15,12 +14,10 @@ export class ClientViewModel {
   }
 
   static toFindAll(clients: Client[]) {
-    return {
-      clients: clients.map((client) => ({
-        id: client.id,
-        name: client.name,
-        contact: client.contact,
-      })),
-    };
+    return clients.map((client) => ({
+      id: client.id,
+      name: client.name,
+      contact: client.contact,
+    }));
   }
 }

@@ -1,10 +1,9 @@
 import { Garment } from '../../../app/entities/garment';
 
 export class GarmentViewModel {
-  static toCreate(garment: Garment) {
+  static toCreate(success: boolean) {
     return {
-      type: garment.type,
-      value: garment.value,
+      isCreated: success,
     };
   }
 
@@ -16,6 +15,7 @@ export class GarmentViewModel {
 
   static toFindAll(garments: Garment[]) {
     return garments.map((garment) => ({
+      id: garment.id,
       type: garment.type,
       value: garment.value,
     }));

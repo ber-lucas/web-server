@@ -1,10 +1,20 @@
 import { randomUUID } from 'node:crypto';
 
-export interface OrderProperties {
-  date: Date;
-  clientId: string;
-  garmentId: string;
+export interface GarmentOrderProperties {
+  id: string;
+  type: string;
+  value: number;
+}
+
+export interface GarmentOrder {
+  garment: GarmentOrderProperties;
   amount: number;
+}
+
+export interface OrderProperties {
+  date?: Date;
+  clientId: string;
+  garments: GarmentOrder[];
 }
 
 export class Order {
@@ -12,11 +22,10 @@ export class Order {
   private readonly _id: string;
 
   constructor(properties: OrderProperties) {
-    this.properties = properties;
-
-    if (this.properties.date == undefined) {
-      this.properties.date = new Date();
-    }
+    this.properties = {
+      ...properties,
+      date: properties.date ?? new Date(),
+    };
 
     this._id = randomUUID();
   }
@@ -26,7 +35,7 @@ export class Order {
   }
 
   public get date(): Date {
-    return this.properties.date;
+    return this.properties.date!;
   }
 
   public set date(date: Date) {
@@ -39,5 +48,13 @@ export class Order {
 
   public set clientId(clientId: string) {
     this.properties.clientId = clientId;
+  }
+
+  public get garments(): GarmentOrder[] {
+    return this.properties.garments;
+  }
+
+  public set garments(garments: GarmentOrder[]) {
+    this.properties.garments = garments;
   }
 }

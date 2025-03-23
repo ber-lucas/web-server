@@ -7,7 +7,7 @@ import { Garment } from '../../../app/entities/garment';
 export class PrismaGarmentRepository implements GarmentRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async create(garment: Garment): Promise<void> {
+  async create(garment: Garment): Promise<boolean> {
     try {
       await this.prismaService.garment.create({
         data: {
@@ -16,6 +16,8 @@ export class PrismaGarmentRepository implements GarmentRepository {
           value: garment.value,
         },
       });
+
+      return true;
     } catch (e) {
       throw new Error(`Create garment error: ${e}`);
     }

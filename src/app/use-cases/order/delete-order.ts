@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { GarmentRepository } from '../../repositories/garment-repository';
+import { OrderRepository } from '../../repositories/order-repository';
 
-interface DeleteGarmentRequest {
+interface DeleteOrderRequest {
   id: string;
 }
 
-interface DeleteGarmentResponse {
+interface DeleteOrderResponse {
   success: boolean;
 }
 
 @Injectable()
 export class DeleteOrder {
-  constructor(private garmentRepository: GarmentRepository) {}
+  constructor(private orderRepository: OrderRepository) {}
 
-  async execute(request: DeleteGarmentRequest): Promise<DeleteGarmentResponse> {
+  async execute(request: DeleteOrderRequest): Promise<DeleteOrderResponse> {
     const { id } = request;
 
-    const success = await this.garmentRepository.delete(id);
+    const success = await this.orderRepository.delete(id);
 
     return {
       success,

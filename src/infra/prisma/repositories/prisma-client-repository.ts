@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma.service';
 export class PrismaClientRepository implements ClientRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async create(client: Client): Promise<void> {
+  async create(client: Client): Promise<boolean> {
     try {
       await this.prismaService.client.create({
         data: {
@@ -16,6 +16,8 @@ export class PrismaClientRepository implements ClientRepository {
           contact: client.contact,
         },
       });
+
+      return true;
     } catch (e) {
       throw new Error(`Create client error: ${e}`);
     }

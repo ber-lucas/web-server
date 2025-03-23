@@ -19,12 +19,12 @@ export class GarmentController {
     const { type, value } = body;
 
     try {
-      const { garment } = await this.createGarment.execute({
+      const { success } = await this.createGarment.execute({
         type,
         value,
       });
 
-      return GarmentViewModel.toCreate(garment);
+      return GarmentViewModel.toCreate(success);
     } catch (e) {
       throw new Error(e);
     }

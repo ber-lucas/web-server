@@ -19,12 +19,12 @@ export class ClientController {
     const { name, contact } = body;
 
     try {
-      const { client } = await this.createClient.execute({
+      const { success } = await this.createClient.execute({
         name,
         contact,
       });
 
-      return ClientViewModel.toCreate(client);
+      return ClientViewModel.toCreate(success);
     } catch (e) {
       throw new Error(e);
     }

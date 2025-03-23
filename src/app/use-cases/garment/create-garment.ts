@@ -8,7 +8,7 @@ interface CreateGarmentRequest {
 }
 
 interface CreateGarmentResponse {
-  garment: Garment;
+  success: boolean;
 }
 
 @Injectable()
@@ -23,10 +23,10 @@ export class CreateGarment {
       value,
     });
 
-    await this.garmentRepository.create(garment);
+    const success = await this.garmentRepository.create(garment);
 
     return {
-      garment,
+      success,
     };
   }
 }

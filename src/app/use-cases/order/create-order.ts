@@ -1,16 +1,15 @@
 import { OrderRepository } from '../../repositories/order-repository';
-import { Order } from '../../entities/order';
+import { GarmentOrder, Order } from '../../entities/order';
 import { Injectable } from '@nestjs/common';
 
 interface CreateOrderRequest {
-  date: Date;
+  date?: Date;
   clientId: string;
-  garmentId: string;
-  amount: number;
+  garments: GarmentOrder[];
 }
 
 interface CreateOrderResponse {
-  order: Order;
+  success: boolean;
 }
 
 @Injectable()
@@ -18,19 +17,18 @@ export class CreateOrder {
   constructor(private readonly orderRepository: OrderRepository) {}
 
   async execute(request: CreateOrderRequest): Promise<CreateOrderResponse> {
-    const { date, clientId, garmentId, amount } = request;
+    const { date, clientId, garments } = request;
 
     const order = new Order({
       date,
       clientId,
-      garmentId,
-      amount,
+      garments,
     });
 
-    await this.orderRepository.create(order);
+    const success = await this.orderRepository.create(order);
 
     return {
-      order,
+      success,
     };
   }
 }
