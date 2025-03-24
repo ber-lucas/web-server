@@ -16,12 +16,13 @@ export class ClientController {
 
   @Post('create')
   async create(@Body() body: CreateClientBody): Promise<ClientViewModel> {
-    const { name, contact } = body;
+    const { name, contact, address } = body;
 
     try {
       const { success } = await this.createClient.execute({
         name,
         contact,
+        address,
       });
 
       return ClientViewModel.toCreate(success);

@@ -17,12 +17,14 @@ model Client {
   id      String @id
   name    String
   contact String
+  address String
 
   Order Order[]
 }
 
 model Garment {
   id    String @id
+  name  String
   type  String
   value Float
 
@@ -39,11 +41,12 @@ model Order {
 }
 
 model GarmentOnOrders {
-  garment   Garment @relation(fields: [garmentId], references: [id])
-  garmentId String
-  order     Order   @relation(fields: [orderId], references: [id])
-  orderId   String
-  amount    Int
+  garment    Garment @relation(fields: [garmentId], references: [id])
+  garmentId  String
+  order      Order   @relation(fields: [orderId], references: [id])
+  orderId    String
+  amount     Int
+  totalValue Float
 
   @@id([orderId, garmentId])
 }

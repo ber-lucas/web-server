@@ -1,13 +1,13 @@
 import { randomUUID } from 'node:crypto';
 
 export interface GarmentOrderProperties {
-  id: string;
   type: string;
   value: number;
 }
 
 export interface GarmentOrder {
   garment: GarmentOrderProperties;
+  garmentId: string;
   amount: number;
 }
 

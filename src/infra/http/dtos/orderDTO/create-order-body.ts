@@ -11,10 +11,7 @@ import {
 import { Type } from 'class-transformer';
 import { GarmentOrder } from '../../../../app/entities/order';
 
-export class GarmentOrderProperties {
-  @IsUUID()
-  id: string;
-
+class GarmentOrderProperties {
   @IsString()
   type: string;
 
@@ -22,9 +19,12 @@ export class GarmentOrderProperties {
   value: number;
 }
 
-export class GarmentOrderBody {
+class GarmentOrderBody {
   @IsNotEmpty()
   garment: GarmentOrderProperties;
+
+  @IsUUID()
+  garmentId: string;
 
   @IsInt()
   @IsNotEmpty()
@@ -32,7 +32,7 @@ export class GarmentOrderBody {
 }
 
 export class CreateOrderBody {
-  @IsISO8601() // Valida que é uma string de data válida (ISO 8601)
+  @IsISO8601()
   date: Date;
 
   @IsNotEmpty()
@@ -41,7 +41,7 @@ export class CreateOrderBody {
 
   @IsNotEmpty()
   @IsArray()
-  @ValidateNested({ each: true }) // Permite validação em objetos dentro do array
-  @Type(() => GarmentOrderBody) // Garante que os objetos dentro do array sejam instâncias de GarmentOrder
+  @ValidateNested({ each: true })
+  @Type(() => GarmentOrderBody)
   garments: GarmentOrder[];
 }

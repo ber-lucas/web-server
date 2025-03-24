@@ -6,4 +6,7 @@ export class CreateClientBody {
 
   @IsNotEmpty()
   contact: string;
+
+  @IsNotEmpty()
+  address: string;
 }

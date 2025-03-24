@@ -18,7 +18,7 @@ export class PrismaOrderRepository implements OrderRepository {
           GarmentOnOrders: {
             createMany: {
               data: order.garments.map((garmentOrder) => ({
-                garmentId: garmentOrder.garment.id,
+                garmentId: garmentOrder.garmentId,
                 amount: garmentOrder.amount,
               })),
             },
@@ -67,10 +67,10 @@ export class PrismaOrderRepository implements OrderRepository {
             clientId: order.clientId,
             garments: order.GarmentOnOrders.map((garmentOnOrder) => ({
               garment: {
-                id: garmentOnOrder.garment.id,
                 type: garmentOnOrder.garment.type,
                 value: garmentOnOrder.garment.value,
               },
+              garmentId: garmentOnOrder.garmentId,
               amount: garmentOnOrder.amount,
             })),
           }),

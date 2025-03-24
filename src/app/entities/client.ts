@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 export interface ClientProperties {
   name: string;
   contact: string;
+  address: string;
 }
 
 export class Client {
@@ -32,5 +33,13 @@ export class Client {
 
   public set contact(contact: string) {
     this.properties.contact = contact;
+  }
+
+  public get address(): string {
+    return this.properties.address;
+  }
+
+  public set address(address: string) {
+    this.properties.address = address;
   }
 }
