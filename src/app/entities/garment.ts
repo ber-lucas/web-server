@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 export interface GarmentProperties {
+  name: string;
   type: string;
   value: number;
 }
@@ -16,6 +17,14 @@ export class Garment {
 
   public get id(): string {
     return this._id;
+  }
+
+  public get name(): string {
+    return this.properties.name;
+  }
+
+  public set name(name: string) {
+    this.properties.name = name;
   }
 
   public get type(): string {

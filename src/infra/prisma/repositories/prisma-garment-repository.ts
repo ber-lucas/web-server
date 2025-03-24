@@ -12,6 +12,7 @@ export class PrismaGarmentRepository implements GarmentRepository {
       await this.prismaService.garment.create({
         data: {
           id: garment.id,
+          name: garment.name,
           type: garment.type,
           value: garment.value,
         },

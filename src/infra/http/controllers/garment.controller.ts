@@ -16,10 +16,11 @@ export class GarmentController {
 
   @Post('create')
   async create(@Body() body: CreateGarmentBody): Promise<GarmentViewModel> {
-    const { type, value } = body;
+    const { name, type, value } = body;
 
     try {
       const { success } = await this.createGarment.execute({
+        name,
         type,
         value,
       });
