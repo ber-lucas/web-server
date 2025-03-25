@@ -14,6 +14,7 @@ export interface GarmentOrder {
 export interface OrderProperties {
   date?: Date;
   clientId: string;
+  totalValue?: number;
   garments: GarmentOrder[];
 }
 
@@ -21,10 +22,22 @@ export class Order {
   private properties: OrderProperties;
   private readonly _id: string;
 
+  private totalValueCalc(garments: GarmentOrder[]): number {
+    let total: number;
+
+    garments.forEach((garmentProps) => {
+      total = total + garmentProps.garment.value * garmentProps.amount;
+    });
+
+    return total;
+  }
+
   constructor(properties: OrderProperties) {
     this.properties = {
       ...properties,
       date: properties.date ?? new Date(),
+      totalValue:
+        properties.totalValue ?? this.totalValueCalc(properties.garments),
     };
 
     this._id = randomUUID();
@@ -32,6 +45,10 @@ export class Order {
 
   public get id(): string {
     return this._id;
+  }
+
+  public get totalValue(): number {
+    return this.properties.totalValue;
   }
 
   public get date(): Date {

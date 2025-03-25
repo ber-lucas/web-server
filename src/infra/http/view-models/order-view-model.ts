@@ -18,12 +18,13 @@ export class OrderViewModel {
       id: order.id,
       date: order.date,
       clientId: order.clientId,
+      totalValue: order.totalValue,
       garments: order.garments.map((garmentOnOrder) => ({
         garment: {
-          garmentId: garmentOnOrder.garment.id,
           type: garmentOnOrder.garment.type,
           value: garmentOnOrder.garment.value,
         },
+        garmentId: garmentOnOrder.garmentId,
         amount: garmentOnOrder.amount,
       })),
     }));

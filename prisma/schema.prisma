@@ -32,21 +32,22 @@ model Garment {
 }
 
 model Order {
-  id              String            @id
-  orderNumber     Int               @default(autoincrement())
-  date            DateTime          @default(now())
-  clientId        String
-  client          Client            @relation(fields: [clientId], references: [id])
+  id          String   @id
+  orderNumber Int      @default(autoincrement())
+  date        DateTime @default(now())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id])
+  totalValue  Float
+  
   GarmentOnOrders GarmentOnOrders[]
 }
 
 model GarmentOnOrders {
-  garment    Garment @relation(fields: [garmentId], references: [id])
-  garmentId  String
-  order      Order   @relation(fields: [orderId], references: [id])
-  orderId    String
-  amount     Int
-  totalValue Float
+  garment   Garment @relation(fields: [garmentId], references: [id])
+  garmentId String
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  amount    Int
 
   @@id([orderId, garmentId])
 }
