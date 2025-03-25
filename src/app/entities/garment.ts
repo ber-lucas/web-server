@@ -10,9 +10,9 @@ export class Garment {
   private properties: GarmentProperties;
   private readonly _id: string;
 
-  constructor(properties: GarmentProperties) {
+  constructor(properties: GarmentProperties, id?: string) {
     this.properties = properties;
-    this._id = randomUUID();
+    this._id = id ?? randomUUID();
   }
 
   public get id(): string {

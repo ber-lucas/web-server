@@ -16,6 +16,7 @@ export class GarmentViewModel {
   static toFindAll(garments: Garment[]) {
     return garments.map((garment) => ({
       id: garment.id,
+      name: garment.name,
       type: garment.type,
       value: garment.value,
     }));

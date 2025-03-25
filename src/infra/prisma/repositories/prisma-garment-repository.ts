@@ -40,7 +40,17 @@ export class PrismaGarmentRepository implements GarmentRepository {
     try {
       const garments = await this.prismaService.garment.findMany();
 
-      return garments.map((garment) => new Garment(garment));
+      return garments.map(
+        (garment) =>
+          new Garment(
+            {
+              name: garment.name,
+              type: garment.type,
+              value: garment.value,
+            },
+            garment.id,
+          ),
+      );
     } catch (e) {
       throw new Error(`FindAll garment error: ${e}`);
     }
