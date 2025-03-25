@@ -39,7 +39,18 @@ export class PrismaClientRepository implements ClientRepository {
   async findAll(): Promise<Client[]> {
     try {
       const clients = await this.prismaService.client.findMany();
-      return clients.map((client) => new Client(client));
+
+      return clients.map(
+        (client) =>
+          new Client(
+            {
+              name: client.name,
+              contact: client.contact,
+              address: client.address,
+            },
+            client.id,
+          ),
+      );
     } catch (e) {
       throw new Error(`Find all clients error: ${e}`);
     }

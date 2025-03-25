@@ -10,9 +10,9 @@ export class Client {
   private properties: ClientProperties;
   private readonly _id: string;
 
-  constructor(properties: ClientProperties) {
+  constructor(properties: ClientProperties, id?: string) {
     this.properties = properties;
-    this._id = randomUUID();
+    this._id = id ?? randomUUID();
   }
 
   public get id(): string {
