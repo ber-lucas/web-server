@@ -17,6 +17,7 @@ export class ClientController {
   @Post('create')
   async create(@Body() body: CreateClientBody): Promise<ClientViewModel> {
     const { name, contact, address } = body;
+    console.log(name, contact, address);
 
     try {
       const { success } = await this.createClient.execute({

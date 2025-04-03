@@ -1,14 +1,10 @@
 import { randomUUID } from 'node:crypto';
 
-export interface GarmentOrderProperties {
-  type: string;
-  value: number;
-}
-
 export interface GarmentOrder {
-  garment: GarmentOrderProperties;
   garmentId: string;
   amount: number;
+  value: number;
+  type?: string;
 }
 
 export interface OrderProperties {
@@ -23,24 +19,24 @@ export class Order {
   private readonly _id: string;
 
   private totalValueCalc(garments: GarmentOrder[]): number {
-    let total: number;
+    let total: number = 0;
 
     garments.forEach((garmentProps) => {
-      total = total + garmentProps.garment.value * garmentProps.amount;
+      total = total + garmentProps.value * garmentProps.amount;
     });
 
     return total;
   }
 
-  constructor(properties: OrderProperties) {
+  constructor(properties: OrderProperties, id?: string) {
+    console.log(properties.totalValue);
     this.properties = {
       ...properties,
       date: properties.date ?? new Date(),
-      totalValue:
-        properties.totalValue ?? this.totalValueCalc(properties.garments),
+      totalValue: this.totalValueCalc(properties.garments),
     };
 
-    this._id = randomUUID();
+    this._id = id ?? randomUUID();
   }
 
   public get id(): string {

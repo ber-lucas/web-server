@@ -1,11 +1,17 @@
 import { OrderRepository } from '../../repositories/order-repository';
-import { GarmentOrder, Order } from '../../entities/order';
+import { Order } from '../../entities/order';
 import { Injectable } from '@nestjs/common';
+
+interface GarmentOrderProperties {
+  garmentId: string;
+  amount: number;
+  value: number;
+}
 
 interface CreateOrderRequest {
   date?: Date;
   clientId: string;
-  garments: GarmentOrder[];
+  garments: GarmentOrderProperties[];
 }
 
 interface CreateOrderResponse {

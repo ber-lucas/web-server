@@ -4,35 +4,30 @@ import {
   IsISO8601,
   IsNotEmpty,
   IsNumber,
-  IsString,
+  IsOptional,
   IsUUID,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { GarmentOrder } from '../../../../app/entities/order';
 
-class GarmentOrderProperties {
-  @IsString()
-  type: string;
-
-  @IsNumber()
-  value: number;
-}
-
 class GarmentOrderBody {
-  @IsNotEmpty()
-  garment: GarmentOrderProperties;
-
   @IsUUID()
+  @IsNotEmpty()
   garmentId: string;
 
   @IsInt()
   @IsNotEmpty()
   amount: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  value: number;
 }
 
 export class CreateOrderBody {
   @IsISO8601()
+  @IsOptional()
   date: Date;
 
   @IsNotEmpty()

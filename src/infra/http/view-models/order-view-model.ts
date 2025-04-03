@@ -20,12 +20,10 @@ export class OrderViewModel {
       clientId: order.clientId,
       totalValue: order.totalValue,
       garments: order.garments.map((garmentOnOrder) => ({
-        garment: {
-          type: garmentOnOrder.garment.type,
-          value: garmentOnOrder.garment.value,
-        },
         garmentId: garmentOnOrder.garmentId,
         amount: garmentOnOrder.amount,
+        value: garmentOnOrder.value,
+        type: garmentOnOrder.type,
       })),
     }));
   }

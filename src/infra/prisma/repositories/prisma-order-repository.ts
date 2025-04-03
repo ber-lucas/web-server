@@ -12,9 +12,12 @@ export class PrismaOrderRepository implements OrderRepository {
       await this.prismaService.order.create({
         data: {
           id: order.id,
-          clientId: order.clientId,
           date: order.date,
           totalValue: order.totalValue,
+
+          client: {
+            connect: { id: order.clientId }, // 🔹 Vincula ao cliente existente
+          },
 
           GarmentOnOrders: {
             createMany: {
@@ -63,19 +66,20 @@ export class PrismaOrderRepository implements OrderRepository {
 
       return orders.map(
         (order) =>
-          new Order({
-            date: order.date,
-            clientId: order.clientId,
-            totalValue: order.totalValue,
-            garments: order.GarmentOnOrders.map((garmentOnOrder) => ({
-              garment: {
-                type: garmentOnOrder.garment.type,
+          new Order(
+            {
+              date: order.date,
+              clientId: order.clientId,
+              totalValue: order.totalValue,
+              garments: order.GarmentOnOrders.map((garmentOnOrder) => ({
+                garmentId: garmentOnOrder.garmentId,
+                amount: garmentOnOrder.amount,
                 value: garmentOnOrder.garment.value,
-              },
-              garmentId: garmentOnOrder.garmentId,
-              amount: garmentOnOrder.amount,
-            })),
-          }),
+                type: garmentOnOrder.garment.type,
+              })),
+            },
+            order.id,
+          ),
       );
     } catch (e) {
       throw new Error(`find all Order error: ${e}`);
