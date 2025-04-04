@@ -20,6 +20,8 @@ model Client {
   address String
 
   Order Order[]
+
+  @@map("Client")
 }
 
 model Garment {
@@ -29,6 +31,8 @@ model Garment {
   value Float
 
   GarmentOnOrders GarmentOnOrders[]
+
+  @@map("Garment")
 }
 
 model Order {
@@ -38,8 +42,10 @@ model Order {
   clientId    String
   client      Client   @relation(fields: [clientId], references: [id])
   totalValue  Float
-  
+
   GarmentOnOrders GarmentOnOrders[]
+
+  @@map("Order")
 }
 
 model GarmentOnOrders {
@@ -50,4 +56,5 @@ model GarmentOnOrders {
   amount    Int
 
   @@id([orderId, garmentId])
+  @@map("GarmentOnOrders")
 }
