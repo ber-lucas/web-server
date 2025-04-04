@@ -8,6 +8,7 @@ export interface GarmentOrder {
 }
 
 export interface OrderProperties {
+  orderNumber?: number;
   date?: Date;
   clientId: string;
   totalValue?: number;
@@ -45,6 +46,14 @@ export class Order {
 
   public get totalValue(): number {
     return this.properties.totalValue;
+  }
+
+  public get orderNumber(): number {
+    return this.properties.orderNumber!;
+  }
+
+  public set orderNumber(orderNumber: number) {
+    this.properties.orderNumber = orderNumber;
   }
 
   public get date(): Date {

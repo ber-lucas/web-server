@@ -16,6 +16,7 @@ export class OrderViewModel {
   static toFindAll(orders: Order[]) {
     return orders.map((order) => ({
       id: order.id,
+      orderNumber: order.orderNumber,
       date: order.date,
       clientId: order.clientId,
       totalValue: order.totalValue,

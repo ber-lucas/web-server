@@ -68,6 +68,7 @@ export class PrismaOrderRepository implements OrderRepository {
         (order) =>
           new Order(
             {
+              orderNumber: order.orderNumber,
               date: order.date,
               clientId: order.clientId,
               totalValue: order.totalValue,
