@@ -1,13 +1,14 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { Plus, Trash2 } from "lucide-react"
-import { type Order, type Client, type Garment, orderApi, clientApi, garmentApi } from "@/lib/api"
-import { DataTable } from "@/components/ui/data-table"
-import { Button } from "@/components/ui/button"
-import { OrderForm } from "./order-form"
-import { ConfirmDialog } from "@/components/ui/confirm-dialog"
-import { useToast } from "@/hooks/use-toast"
+import { useEffect, useState } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
+import { type Client, clientApi, type Garment, garmentApi, type Order, orderApi } from '@/lib/api';
+import { DataTable } from '@/components/ui/data-table';
+import { Button } from '@/components/ui/button';
+import { OrderForm } from './order-form';
+import { OrderDetailsDialog } from './order-details-dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 export default function OrdersView() {
   const [orders, setOrders] = useState<Order[]>([])
@@ -16,6 +17,7 @@ export default function OrdersView() {
   const [isLoading, setIsLoading] = useState(true)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
@@ -98,12 +100,27 @@ export default function OrdersView() {
     }
   }
 
+  const handleRowClick = (order: Order) => {
+    setSelectedOrder(order)
+    setIsDetailsDialogOpen(true)
+  }
+
   const getClientName = (clientId: string) => {
     const client = clients.find((c) => c.id === clientId)
     return client ? client.name : "Unknown Client"
   }
 
+  // Prepare data for search by client name
+  const ordersWithClientNames = orders.map((order) => ({
+    ...order,
+    clientName: getClientName(order.clientId),
+  }))
+
   const columns = [
+    {
+      key: "orderNumber",
+      title: "Order #",
+    },
     {
       key: "date",
       title: "Date",
@@ -158,7 +175,12 @@ export default function OrdersView() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
         </div>
       ) : (
-        <DataTable data={orders} columns={columns} searchField="clientId" />
+        <DataTable
+          data={ordersWithClientNames}
+          columns={columns}
+          searchField="clientName"
+          onRowClick={handleRowClick}
+        />
       )}
 
       <OrderForm
@@ -168,6 +190,14 @@ export default function OrdersView() {
         clients={clients}
         garments={garments}
         isSubmitting={isSubmitting}
+      />
+
+      <OrderDetailsDialog
+        isOpen={isDetailsDialogOpen}
+        onClose={() => setIsDetailsDialogOpen(false)}
+        order={selectedOrder}
+        clients={clients}
+        garments={garments}
       />
 
       <ConfirmDialog
@@ -181,4 +211,3 @@ export default function OrdersView() {
     </div>
   )
 }
-

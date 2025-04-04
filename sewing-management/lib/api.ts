@@ -22,6 +22,7 @@ export interface GarmentOrder {
 
 export interface Order {
   id: string
+  orderNumber: string // Added orderNumber field
   date: string
   clientId: string
   totalValue: number
@@ -29,7 +30,7 @@ export interface Order {
 }
 
 // API base URL - replace with your actual backend URL
-const API_BASE_URL = "http://localhost:3000" // Change this to your backend URL
+const API_BASE_URL = "http://localhost:3001/api" // Change this to your backend URL
 
 // Client API
 export const clientApi = {
@@ -98,8 +99,8 @@ export const orderApi = {
   },
 
   create: async (order: {
-    date?: Date
     clientId: string
+    date?: Date
     garments: Omit<GarmentOrder, "type">[]
   }): Promise<{ isCreated: boolean }> => {
     const response = await fetch(`${API_BASE_URL}/order/create`, {
@@ -121,4 +122,3 @@ export const orderApi = {
     return response.json()
   },
 }
-
