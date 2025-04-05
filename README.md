@@ -22,9 +22,9 @@ Desenvolvimento de um **Sistema de Gerenciamento de Ordens de Serviço para Cost
 
 O sistema contará inicialmente com um CRUD para gerenciamento de:
 
-- ✅ Ordens de serviço (criação, edição e exclusão de pedidos).
-- ✅ Clientes (cadastro, atualização e remoção de clientes).
-- ✅ Peças (registro e gerenciamento dos tipos de peças).
+- ✅ Ordens de serviço (criação e exclusão de pedidos).
+- ✅ Clientes (cadastro e remoção de clientes).
+- ✅ Peças (registro e reomoção dos tipos de peças).
 
 📈 *Funcionalidades futuras (se o tempo permitir):*
 
