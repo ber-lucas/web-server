@@ -35,8 +35,8 @@ export default function OrdersView() {
       setGarments(garmentsData)
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to fetch data",
+        title: "Erro",
+        description: "Falha ao buscar dados",
         variant: "destructive",
       })
     } finally {
@@ -58,16 +58,16 @@ export default function OrdersView() {
       const result = await orderApi.create(order)
       if (result.isCreated) {
         toast({
-          title: "Success",
-          description: "Order created successfully",
+          title: "Sucesso",
+          description: "Pedido criado com sucesso",
         })
         setIsCreateDialogOpen(false)
         fetchData()
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create order",
+        title: "Erro",
+        description: "Falha ao criar pedido",
         variant: "destructive",
       })
     } finally {
@@ -83,16 +83,16 @@ export default function OrdersView() {
       const result = await orderApi.delete(selectedOrder.id)
       if (result.isDeleted) {
         toast({
-          title: "Success",
-          description: "Order deleted successfully",
+          title: "Sucesso",
+          description: "Pedido excluído com sucesso",
         })
         setIsDeleteDialogOpen(false)
         fetchData()
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete order",
+        title: "Erro",
+        description: "Falha ao excluir pedido",
         variant: "destructive",
       })
     } finally {
@@ -107,7 +107,7 @@ export default function OrdersView() {
 
   const getClientName = (clientId: string) => {
     const client = clients.find((c) => c.id === clientId)
-    return client ? client.name : "Unknown Client"
+    return client ? client.name : "Cliente Desconhecido"
   }
 
   // Prepare data for search by client name
@@ -116,34 +116,41 @@ export default function OrdersView() {
     clientName: getClientName(order.clientId),
   }))
 
+  // Função para corrigir o problema de fuso horário nas datas
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    // Adiciona o fuso horário local para corrigir o problema de exibição
+    return new Date(date.getTime() + date.getTimezoneOffset() * 60000).toLocaleDateString()
+  }
+
   const columns = [
     {
       key: "orderNumber",
-      title: "Order #",
+      title: "Nº Pedido",
     },
     {
       key: "date",
-      title: "Date",
-      render: (order: Order) => new Date(order.date).toLocaleDateString(),
+      title: "Data",
+      render: (order: Order) => formatDate(order.date),
     },
     {
       key: "clientId",
-      title: "Client",
+      title: "Cliente",
       render: (order: Order) => getClientName(order.clientId),
     },
     {
       key: "totalValue",
-      title: "Total Value",
-      render: (order: Order) => `$${order.totalValue.toFixed(2)}`,
+      title: "Valor Total",
+      render: (order: Order) => `R$${order.totalValue.toFixed(2)}`,
     },
     {
       key: "garments",
-      title: "Items",
+      title: "Itens",
       render: (order: Order) => order.garments.length,
     },
     {
       key: "actions",
-      title: "Actions",
+      title: "Ações",
       render: (order: Order) => (
         <Button
           variant="ghost"
@@ -163,10 +170,10 @@ export default function OrdersView() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Orders</h2>
+        <h2 className="text-2xl font-semibold">Pedidos</h2>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          New Order
+          Novo Pedido
         </Button>
       </div>
 
@@ -179,6 +186,7 @@ export default function OrdersView() {
           data={ordersWithClientNames}
           columns={columns}
           searchField="clientName"
+          searchPlaceholder="Buscar por nome do cliente..."
           onRowClick={handleRowClick}
         />
       )}
@@ -201,8 +209,8 @@ export default function OrdersView() {
       />
 
       <ConfirmDialog
-        title="Delete Order"
-        description={`Are you sure you want to delete this order? This action cannot be undone.`}
+        title="Excluir Pedido"
+        description={`Tem certeza que deseja excluir este pedido? Esta ação não pode ser desfeita.`}
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleDeleteOrder}
@@ -211,3 +219,4 @@ export default function OrdersView() {
     </div>
   )
 }
+

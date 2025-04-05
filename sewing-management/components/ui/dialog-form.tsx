@@ -1,8 +1,6 @@
-"use client"
+'use client';
 
-import type React from "react"
-
-import type { ReactNode } from "react"
+import type React, { ReactNode } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -10,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 interface DialogFormProps {
   title: string
@@ -25,15 +23,15 @@ interface DialogFormProps {
 }
 
 export function DialogForm({
-  title,
-  description,
-  isOpen,
-  onClose,
-  onSubmit,
-  children,
-  submitLabel = "Save",
-  isSubmitting = false,
-}: DialogFormProps) {
+                             title,
+                             description,
+                             isOpen,
+                             onClose,
+                             onSubmit,
+                             children,
+                             submitLabel = "Salvar",
+                             isSubmitting = false,
+                           }: DialogFormProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -45,10 +43,10 @@ export function DialogForm({
           <div className="py-4 space-y-4">{children}</div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : submitLabel}
+              {isSubmitting ? "Salvando..." : submitLabel}
             </Button>
           </DialogFooter>
         </form>

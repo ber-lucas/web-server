@@ -30,7 +30,7 @@ export interface Order {
 }
 
 // API base URL - replace with your actual backend URL
-const API_BASE_URL = "http://localhost:3001/api" // Change this to your backend URL
+const API_BASE_URL = "http://localhost:3000" // Change this to your backend URL
 
 // Client API
 export const clientApi = {

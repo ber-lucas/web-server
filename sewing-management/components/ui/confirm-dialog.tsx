@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import {
   AlertDialog,
@@ -9,7 +9,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog';
 
 interface ConfirmDialogProps {
   title: string
@@ -23,15 +23,15 @@ interface ConfirmDialogProps {
 }
 
 export function ConfirmDialog({
-  title,
-  description,
-  isOpen,
-  onClose,
-  onConfirm,
-  confirmLabel = "Delete",
-  cancelLabel = "Cancel",
-  isConfirming = false,
-}: ConfirmDialogProps) {
+                                title,
+                                description,
+                                isOpen,
+                                onClose,
+                                onConfirm,
+                                confirmLabel = "Excluir",
+                                cancelLabel = "Cancelar",
+                                isConfirming = false,
+                              }: ConfirmDialogProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
@@ -49,7 +49,7 @@ export function ConfirmDialog({
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             disabled={isConfirming}
           >
-            {isConfirming ? "Processing..." : confirmLabel}
+            {isConfirming ? "Processando..." : confirmLabel}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

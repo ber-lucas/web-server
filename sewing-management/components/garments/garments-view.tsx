@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { Plus, Trash2 } from "lucide-react"
-import { type Garment, garmentApi } from "@/lib/api"
-import { DataTable } from "@/components/ui/data-table"
-import { Button } from "@/components/ui/button"
-import { GarmentForm } from "./garment-form"
-import { ConfirmDialog } from "@/components/ui/confirm-dialog"
-import { useToast } from "@/hooks/use-toast"
+import { useEffect, useState } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
+import { type Garment, garmentApi } from '@/lib/api';
+import { DataTable } from '@/components/ui/data-table';
+import { Button } from '@/components/ui/button';
+import { GarmentForm } from './garment-form';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 export default function GarmentsView() {
   const [garments, setGarments] = useState<Garment[]>([])
@@ -25,8 +25,8 @@ export default function GarmentsView() {
       setGarments(data)
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to fetch garments",
+        title: "Erro",
+        description: "Falha ao buscar peças",
         variant: "destructive",
       })
     } finally {
@@ -44,16 +44,16 @@ export default function GarmentsView() {
       const result = await garmentApi.create(garment)
       if (result.isCreated) {
         toast({
-          title: "Success",
-          description: "Garment created successfully",
+          title: "Sucesso",
+          description: "Peça criada com sucesso",
         })
         setIsCreateDialogOpen(false)
         fetchGarments()
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create garment",
+        title: "Erro",
+        description: "Falha ao criar peça",
         variant: "destructive",
       })
     } finally {
@@ -69,16 +69,16 @@ export default function GarmentsView() {
       const result = await garmentApi.delete(selectedGarment.id)
       if (result.isDeleted) {
         toast({
-          title: "Success",
-          description: "Garment deleted successfully",
+          title: "Sucesso",
+          description: "Peça excluída com sucesso",
         })
         setIsDeleteDialogOpen(false)
         fetchGarments()
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete garment",
+        title: "Erro",
+        description: "Falha ao excluir peça",
         variant: "destructive",
       })
     } finally {
@@ -87,16 +87,16 @@ export default function GarmentsView() {
   }
 
   const columns = [
-    { key: "name", title: "Name" },
-    { key: "type", title: "Type" },
+    { key: "name", title: "Nome" },
+    { key: "type", title: "Tipo" },
     {
       key: "value",
-      title: "Value",
-      render: (garment: Garment) => `$${garment.value.toFixed(2)}`,
+      title: "Valor",
+      render: (garment: Garment) => `R$${garment.value.toFixed(2)}`,
     },
     {
       key: "actions",
-      title: "Actions",
+      title: "Ações",
       render: (garment: Garment) => (
         <Button
           variant="ghost"
@@ -116,10 +116,10 @@ export default function GarmentsView() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Garments</h2>
+        <h2 className="text-2xl font-semibold">Peças</h2>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Add Garment
+          Adicionar Peça
         </Button>
       </div>
 
@@ -128,7 +128,7 @@ export default function GarmentsView() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
         </div>
       ) : (
-        <DataTable data={garments} columns={columns} searchField="name" />
+        <DataTable data={garments} columns={columns} searchField="name" searchPlaceholder="Buscar por nome..." />
       )}
 
       <GarmentForm
@@ -139,8 +139,8 @@ export default function GarmentsView() {
       />
 
       <ConfirmDialog
-        title="Delete Garment"
-        description={`Are you sure you want to delete ${selectedGarment?.name}? This action cannot be undone.`}
+        title="Excluir Peça"
+        description={`Tem certeza que deseja excluir ${selectedGarment?.name}? Esta ação não pode ser desfeita.`}
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleDeleteGarment}

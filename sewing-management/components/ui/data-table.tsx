@@ -1,11 +1,10 @@
-"use client"
+'use client';
 
-import type React from "react"
-
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
+import type React from 'react';
+import { useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 
 interface DataTableProps<T> {
   data: T[]
@@ -16,14 +15,16 @@ interface DataTableProps<T> {
   }[]
   searchField?: string
   onRowClick?: (item: T) => void
+  searchPlaceholder?: string
 }
 
 export function DataTable<T extends Record<string, any>>({
-  data,
-  columns,
-  searchField,
-  onRowClick,
-}: DataTableProps<T>) {
+                                                           data,
+                                                           columns,
+                                                           searchField,
+                                                           onRowClick,
+                                                           searchPlaceholder,
+                                                         }: DataTableProps<T>) {
   const [searchQuery, setSearchQuery] = useState("")
 
   const filteredData = searchField
@@ -36,7 +37,7 @@ export function DataTable<T extends Record<string, any>>({
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder={`Search by ${searchField}...`}
+            placeholder={searchPlaceholder || `Buscar por ${searchField}...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -56,7 +57,7 @@ export function DataTable<T extends Record<string, any>>({
             {filteredData.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results found.
+                  Nenhum resultado encontrado.
                 </TableCell>
               </TableRow>
             ) : (

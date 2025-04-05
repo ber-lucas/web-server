@@ -30,7 +30,7 @@ export class Order {
   }
 
   constructor(properties: OrderProperties, id?: string) {
-    console.log(properties.totalValue);
+    console.log(properties.date);
     this.properties = {
       ...properties,
       date: properties.date ?? new Date(),

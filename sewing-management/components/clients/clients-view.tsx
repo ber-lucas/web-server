@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { Plus, Trash2 } from "lucide-react"
-import { type Client, clientApi } from "@/lib/api"
-import { DataTable } from "@/components/ui/data-table"
-import { Button } from "@/components/ui/button"
-import { ClientForm } from "./client-form"
-import { ConfirmDialog } from "@/components/ui/confirm-dialog"
-import { useToast } from "@/hooks/use-toast"
+import { useEffect, useState } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
+import { type Client, clientApi } from '@/lib/api';
+import { DataTable } from '@/components/ui/data-table';
+import { Button } from '@/components/ui/button';
+import { ClientForm } from './client-form';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ClientsView() {
   const [clients, setClients] = useState<Client[]>([])
@@ -25,8 +25,8 @@ export default function ClientsView() {
       setClients(data)
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to fetch clients",
+        title: "Erro",
+        description: "Falha ao buscar clientes",
         variant: "destructive",
       })
     } finally {
@@ -44,16 +44,16 @@ export default function ClientsView() {
       const result = await clientApi.create(client)
       if (result.isCreated) {
         toast({
-          title: "Success",
-          description: "Client created successfully",
+          title: "Sucesso",
+          description: "Cliente criado com sucesso",
         })
         setIsCreateDialogOpen(false)
         fetchClients()
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create client",
+        title: "Erro",
+        description: "Falha ao criar cliente",
         variant: "destructive",
       })
     } finally {
@@ -69,16 +69,16 @@ export default function ClientsView() {
       const result = await clientApi.delete(selectedClient.id)
       if (result.isDelete) {
         toast({
-          title: "Success",
-          description: "Client deleted successfully",
+          title: "Sucesso",
+          description: "Cliente excluído com sucesso",
         })
         setIsDeleteDialogOpen(false)
         fetchClients()
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete client",
+        title: "Erro",
+        description: "Falha ao excluir cliente",
         variant: "destructive",
       })
     } finally {
@@ -87,12 +87,12 @@ export default function ClientsView() {
   }
 
   const columns = [
-    { key: "name", title: "Name" },
-    { key: "contact", title: "Contact" },
-    { key: "address", title: "Address" },
+    { key: "name", title: "Nome" },
+    { key: "contact", title: "Contato" },
+    { key: "address", title: "Endereço" },
     {
       key: "actions",
-      title: "Actions",
+      title: "Ações",
       render: (client: Client) => (
         <Button
           variant="ghost"
@@ -112,10 +112,10 @@ export default function ClientsView() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Clients</h2>
+        <h2 className="text-2xl font-semibold">Clientes</h2>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Add Client
+          Adicionar Cliente
         </Button>
       </div>
 
@@ -124,7 +124,7 @@ export default function ClientsView() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
         </div>
       ) : (
-        <DataTable data={clients} columns={columns} searchField="name" />
+        <DataTable data={clients} columns={columns} searchField="name" searchPlaceholder="Buscar por nome..." />
       )}
 
       <ClientForm
@@ -135,8 +135,8 @@ export default function ClientsView() {
       />
 
       <ConfirmDialog
-        title="Delete Client"
-        description={`Are you sure you want to delete ${selectedClient?.name}? This action cannot be undone.`}
+        title="Excluir Cliente"
+        description={`Tem certeza que deseja excluir ${selectedClient?.name}? Esta ação não pode ser desfeita.`}
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleDeleteClient}
